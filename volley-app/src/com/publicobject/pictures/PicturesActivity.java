@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -124,8 +125,28 @@ public class PicturesActivity extends Activity {
           ? (LinearLayout) convertView
           : (LinearLayout) getLayoutInflater().inflate(R.layout.pictureitem, parent, false);
       TextView text = (TextView) view.findViewById(R.id.text);
-      text.setText(pictureFileNames.get(position));
+      NetworkImageView picture = (NetworkImageView) view.findViewById(R.id.picture);
+
+      PicturesApp app = getApp();
+
+      String pictureFileName = pictureFileNames.get(position);
+      text.setText(pictureFileName);
+      if (isImage(pictureFileName)) {
+        picture.setImageResource(R.drawable.loading);
+        picture.setImageUrl(app.fileToUrl(pictureFileName), app.getImageLoader());
+      } else {
+        picture.setImageUrl(null, app.getImageLoader());
+        picture.setImageResource(R.drawable.doc);
+      }
+
       return view;
     }
+  }
+
+  private boolean isImage(String pictureFileName) {
+    return pictureFileName.endsWith(".png")
+        || pictureFileName.endsWith(".gif")
+        || pictureFileName.endsWith(".jpg")
+        || pictureFileName.endsWith(".jpeg");
   }
 }
