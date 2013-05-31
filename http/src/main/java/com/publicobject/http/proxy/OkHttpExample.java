@@ -31,7 +31,9 @@ public class OkHttpExample {
   }
 
   public static void main(String[] args) throws IOException {
-    Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("10.8.247.203", 8888));
+    // Charles Web Debugging Proxy runs on port 8888.
+    // Use 'localhost' to run on a desktop JVM or '10.0.2.2' to run in an emulator.
+    Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 8888));
     String url = "http://localhost:8910/rfc2616.txt";
     new OkHttpExample(proxy).get(url);
   }
