@@ -8,7 +8,7 @@ public class ImageServiceTest {
   @Test public void test() {
     RestAdapter restAdapter = new RestAdapter.Builder()
         .setClient(new UrlConnectionClient())
-        .setServer("http://localhost:8910/")
+        .setEndpoint("http://localhost:8910/")
         .build();
     ImageService imageService = restAdapter.create(ImageService.class);
     System.out.println(imageService.listImages(""));
